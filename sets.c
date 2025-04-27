@@ -23,8 +23,13 @@ void free_set(struct set* set) {
 
 }
 
+// returns 1 if set1 is disjoint with set2, otherwise 0
+int is_disjoint_set(struct set* set1, struct set* set2) {
+    return 1;
+}
+
 // returns 1 if n is disjoint with the set, otherwise 0
-int is_disjoint(struct set* set, int n) {
+int is_disjoint_int(struct set* set, int n) {
     return 1;
     /*
     int min = 0;
@@ -54,7 +59,7 @@ int is_disjoint(struct set* set, int n) {
 // adds value n to the set
 // if n is already in the set, nothing is done
 void add_to_set(struct set* set, int n) {
-    if(is_disjoint(set, n)) {
+    if(is_disjoint_int(set, n)) {
         // increase size of set by 1
         set -> size++;
         set -> arr = realloc(set -> arr, set -> size * sizeof(int));
@@ -72,7 +77,9 @@ void add_to_set(struct set* set, int n) {
 // removes value n to the set
 // if n is not in the set, nothing is done
 void remove_from_set(struct set* set, int n) {
-
+    if(is_disjoint_int(set, n)) {
+        
+    }
 }
 
 void print_set(struct set* set) {
@@ -90,6 +97,7 @@ int main() {
     add_to_set(set, 3);
     add_to_set(set, 5);
     add_to_set(set, 2);
+    add_to_set(set, 4);
 
     print_set(set);
 
