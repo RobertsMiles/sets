@@ -23,29 +23,10 @@ void free_set(struct set* set) {
 
 }
 
-// adds value n to the set
-// if n is already in the set, nothing is done
-void add_to_set(struct set* set, int n) {
-    // if n is disjoint with set
-    set -> size++;
-    set -> arr = realloc(set -> arr, set -> size * sizeof(int));
-    
-    int i = set -> size - 1;
-    while(set -> arr[i - 1] > n) {
-        set -> arr[i] = set -> arr[i - 1];
-        i--;
-    }
-    set -> arr[i] = n;
-}
-
-// removes value n to the set
-// if n is not in the set, nothing is done
-void remove_from_set(struct set* set, int n) {
-
-}
-
 // returns 1 if n is disjoint with the set, otherwise 0
 int is_disjoint(struct set* set, int n) {
+    return 1;
+    /*
     int min = 0;
     int max = set -> size - 1;
 
@@ -67,6 +48,31 @@ int is_disjoint(struct set* set, int n) {
         // mid is greater than n
     }
     return -1;
+    */
+}
+
+// adds value n to the set
+// if n is already in the set, nothing is done
+void add_to_set(struct set* set, int n) {
+    if(is_disjoint(set, n)) {
+        // increase size of set by 1
+        set -> size++;
+        set -> arr = realloc(set -> arr, set -> size * sizeof(int));
+
+        // insert n in an ordered manner
+        int i = set -> size - 1;
+        while(set -> arr[i - 1] > n) {
+            set -> arr[i] = set -> arr[i - 1];
+            i--;
+        }
+        set -> arr[i] = n;
+    }
+}
+
+// removes value n to the set
+// if n is not in the set, nothing is done
+void remove_from_set(struct set* set, int n) {
+
 }
 
 void print_set(struct set* set) {
