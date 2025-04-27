@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 // a library for working with sets of integers
 // it is a dynamically sized array, with elements kept in order
@@ -68,8 +69,14 @@ int is_disjoint(struct set* set, int n) {
     return -1;
 }
 
+void print_set(struct set* set) {
+    for(int i = 0; i < set -> size; i++) {
+        printf("%d ", set -> arr[i]);
+    }
+    printf("\n");
+}
+
 int main() {
-    #include <stdio.h>
     struct set* set = initialize_set();
     
     add_to_set(set, 1);
@@ -78,7 +85,7 @@ int main() {
     add_to_set(set, 5);
     add_to_set(set, 2);
 
-    printf("%d %d %d %d %d\n", set -> arr[0], set -> arr[1], set -> arr[2], set -> arr[3], set -> arr[4]);
+    print_set(set);
 
     return 0;
 }
