@@ -74,10 +74,25 @@ void add_to_set(struct set* set, int n) {
     }
 }
 
+// find the index of n in the array using a binary search
+int index_of_n_in_arr(struct set* set, int n) {
+    int min = 0;
+    int max = set -> size - 1;
+    int mid;
+
+    while(min <= max) {
+        mid = min + (max - min) / 2;
+        if(set -> arr[mid] < n) min = mid + 1;
+        else if(set -> arr[mid] > n) max = mid - 1;
+        else return mid;
+    }
+    return -1;
+}
+
 // removes value n to the set
 // if n is not in the set, nothing is done
 void remove_from_set(struct set* set, int n) {
-    if(is_disjoint_int(set, n)) {
+    if(!is_disjoint_int(set, n)) {
         
     }
 }
@@ -100,6 +115,8 @@ int main() {
     add_to_set(set, 4);
 
     print_set(set);
+
+    printf("%d\n", index_of_n_in_arr(set, 0));
 
     return 0;
 }
