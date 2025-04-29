@@ -23,37 +23,35 @@ void free_set(struct set* set) {
 
 }
 
-// returns 1 if set1 is disjoint with set2, otherwise 0
-int is_disjoint_set(struct set* set1, struct set* set2) {
-    return 1;
+// find the index of n in the array using a binary search
+int index_of_n_in_arr(struct set* set, int n) {
+    int min = 0;
+    int max = set -> size - 1;
+    int mid;
+
+    while(min <= max) {
+        mid = min + (max - min) / 2;
+        if(set -> arr[mid] < n) min = mid + 1;
+        else if(set -> arr[mid] > n) max = mid - 1;
+        else return mid;
+    }
+    return -1;
 }
 
 // returns 1 if n is disjoint with the set, otherwise 0
 int is_disjoint_int(struct set* set, int n) {
+    if(index_of_n_in_arr(set, n) == -1)
+        return 1;
+    else
+        return 0;
+}
+
+// returns 1 if set1 is disjoint with set2, otherwise 0
+int is_disjoint_set(struct set* set1, struct set* set2) {
+    for(int i = 0; i < set1 -> size; i++)
+        if(!is_disjoint_int(set2, set1 -> arr[i]))
+            return 0;
     return 1;
-    /*
-    int min = 0;
-    int max = set -> size - 1;
-
-    while(min < max) {
-        int mid = (min + max) / 2;
-
-        // mid is n
-        // so n is already in the set
-        if(set -> arr[mid] == n) {
-            return -1;
-        }
-        else if(set -> arr[mid] < n) { // mid is less than n
-            min = mid + 1;
-        }
-        else if(set -> arr[mid] > n) { // mid is greater than n
-            max = mid - 1;
-        }
-
-        // mid is greater than n
-    }
-    return -1;
-    */
 }
 
 // adds value n to the set
@@ -71,21 +69,6 @@ void add_to_set(struct set* set, int n) {
         }
         set -> arr[i] = n;
     }
-}
-
-// find the index of n in the array using a binary search
-int index_of_n_in_arr(struct set* set, int n) {
-    int min = 0;
-    int max = set -> size - 1;
-    int mid;
-
-    while(min <= max) {
-        mid = min + (max - min) / 2;
-        if(set -> arr[mid] < n) min = mid + 1;
-        else if(set -> arr[mid] > n) max = mid - 1;
-        else return mid;
-    }
-    return -1;
 }
 
 // removes value n to the set
