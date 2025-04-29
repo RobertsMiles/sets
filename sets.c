@@ -19,8 +19,9 @@ struct set* initialize_set() {
 }
 
 // frees set from memory
-void free_set(struct set* set) {
-
+void delete_set(struct set* set) {
+    free(set -> arr);
+    free(set);
 }
 
 // find the index of n in the array using a binary search
@@ -93,22 +94,31 @@ void print_set(struct set* set) {
 
 int main() {
     struct set* set = initialize_set();
+    struct set* set1 = initialize_set();
     
     add_to_set(set, 1);
-    add_to_set(set,0);
+    add_to_set(set1,0);
     add_to_set(set, 3);
-    add_to_set(set, 5);
+    add_to_set(set1, 5);
     add_to_set(set, 2);
-    add_to_set(set, 4);
+    add_to_set(set1, 4);
 
     print_set(set);
+    print_set(set1);
 
     printf("%d\n", index_of_n_in_arr(set, 0));
 
     remove_from_set(set, 2);
-    remove_from_set(set, 4);
+    remove_from_set(set1, 4);
 
     print_set(set);
+    print_set(set1);
+
+    printf("%d\n", is_disjoint_set(set, set1));
+
+    add_to_set(set1, 1);
+
+    printf("%d\n", is_disjoint_set(set, set1));
 
     return 0;
 }
