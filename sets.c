@@ -57,7 +57,6 @@ int is_disjoint_int(struct set* set, int n) {
 }
 
 // adds value n to the set
-// if n is already in the set, nothing is done
 void add_to_set(struct set* set, int n) {
     if(is_disjoint_int(set, n)) {
         // increase size of set by 1
@@ -90,10 +89,15 @@ int index_of_n_in_arr(struct set* set, int n) {
 }
 
 // removes value n to the set
-// if n is not in the set, nothing is done
 void remove_from_set(struct set* set, int n) {
     if(!is_disjoint_int(set, n)) {
+        int* arr = set -> arr;
+
+        for(int i = index_of_n_in_arr(set, n); i < set -> size - 1; i++)
+            arr[i] = arr[i + 1];
         
+        set -> size--;
+        arr = realloc(arr, set -> size * sizeof(int));
     }
 }
 
@@ -117,6 +121,11 @@ int main() {
     print_set(set);
 
     printf("%d\n", index_of_n_in_arr(set, 0));
+
+    remove_from_set(set, 2);
+    remove_from_set(set, 4);
+
+    print_set(set);
 
     return 0;
 }
