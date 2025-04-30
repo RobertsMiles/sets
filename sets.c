@@ -101,7 +101,6 @@ struct set* set_intersection(struct set* set1, struct set* set2) {
 
     for(int i = 0; i < set1 -> size; i++)
         if(!set_is_disjoint(set2, set1 -> arr[i])) {
-            printf("%d %d\n", set1 -> arr[i]);
             set_add(set3, set1 -> arr[i]);
         }
     
