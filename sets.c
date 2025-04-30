@@ -1,16 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "sets.h"
 
 // a library for working with sets of integers
 // it is a dynamically sized array, with elements kept in order
 // to allow for a binary search
 
-struct set {
-    int* arr;
-    int size;
-};
 
-// initializes an empty set
 struct set* initialize_set() {
     struct set* set = malloc(sizeof(struct set));
     set -> arr = malloc(0);
@@ -18,13 +14,11 @@ struct set* initialize_set() {
     return set;
 }
 
-// frees set from memory
 void set_delete(struct set* set) {
     free(set -> arr);
     free(set);
 }
 
-// find the index of n in the array using a binary search
 int index_of_n_in_arr(struct set* set, int n) {
     int min = 0;
     int max = set -> size - 1;
@@ -39,7 +33,6 @@ int index_of_n_in_arr(struct set* set, int n) {
     return -1;
 }
 
-// returns 1 if n is disjoint with the set, otherwise 0
 int set_is_disjoint(struct set* set, int n) {
     if(index_of_n_in_arr(set, n) == -1)
         return 1;
@@ -47,7 +40,6 @@ int set_is_disjoint(struct set* set, int n) {
         return 0;
 }
 
-// returns 1 if set1 is disjoint with set2, otherwise 0
 int sets_are_disjoint(struct set* set1, struct set* set2) {
     for(int i = 0; i < set1 -> size; i++)
         if(!set_is_disjoint(set2, set1 -> arr[i]))
@@ -55,7 +47,6 @@ int sets_are_disjoint(struct set* set1, struct set* set2) {
     return 1;
 }
 
-// adds value n to the set
 void set_add(struct set* set, int n) {
     if(set_is_disjoint(set, n)) {
         // increase size of set by 1
@@ -72,7 +63,6 @@ void set_add(struct set* set, int n) {
     }
 }
 
-// removes value n to the set
 void set_remove(struct set* set, int n) {
     if(!set_is_disjoint(set, n)) {
         int* arr = set -> arr;
@@ -94,7 +84,6 @@ void set_print(struct set* set) {
     printf("\n");
 }
 
-// returns the union of two sets
 struct set* set_union(struct set* set1, struct set* set2) {
     struct set* set3 = initialize_set();
 
@@ -107,7 +96,6 @@ struct set* set_union(struct set* set1, struct set* set2) {
     return set3;
 }
 
-// returns the intersection between two sets
 struct set* set_intersection(struct set* set1, struct set* set2) {
     struct set* set3 = initialize_set();
 
@@ -118,32 +106,4 @@ struct set* set_intersection(struct set* set1, struct set* set2) {
         }
     
     return set3;
-}
-
-int main() {
-    struct set* set = initialize_set();
-    struct set* set1 = initialize_set();
-    
-    set_add(set, 1);
-    set_add(set1,0);
-    set_add(set, 3);
-    set_add(set1, 5);
-    set_add(set, 2);
-    set_add(set1, 4);
-
-    set_remove(set, 2);
-    set_remove(set1, 4);
-
-    set_print(set);
-    set_print(set1);
-
-    struct set* nullset = initialize_set();
-
-    struct set* set2 = set_union(set, set1);
-    set_print(set2);
-
-    struct set* set3 = set_intersection(set, set1);
-    set_print(set3);
-
-    return 0;
 }

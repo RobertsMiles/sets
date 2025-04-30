@@ -1,2 +1,5 @@
 a.out
 sets
+myprogram
+sets.o
+libsets.a
